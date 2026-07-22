@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Học Tiếng Trung Vui Vẻ 🎉</title>
+    <!-- Google Fonts để giao diện dễ thương hơn -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Mochi突:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #FFFDE7;
+            --primary-color: #FF8A8A;
+            --secondary-color: #FFD3B6;
+            --accent-color: #A8E6CF;
+            --text-color: #4A4A4A;
+            --card-bg: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Comfortaa', cursive, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: radial-gradient(#FFD3B6 15%, transparent 16%), radial-gradient(#A8E6CF 15%, transparent 16%);
+            background-size: 60px 60px;
+            background-position: 0 0, 30px 30px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 500px;
+            background: var(--card-bg);
+            border: 6px solid var(--text-color);
+            border-radius: 30px;
+            padding: 30px;
+            box-shadow: 8px 8px 0px var(--text-color);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Trang trí bong bóng hoạt hình */
+        .decor-bubble {
+            position: absolute;
+            background: var(--secondary-color);
+            border-radius: 50%;
+            z-index: 0;
+            opacity: 0.6;
+        }
+
+        /* Các màn hình */
+        .screen {
+            display: none;
+            position: relative;
+            z-index: 1;
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Tiêu đề dễ thương */
+        h1 {
+            font-family: 'Mochi突', sans-serif;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            text-shadow: 3px 3px 0px var(--text-color);
+            -webkit-text-stroke: 1.5px var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        /* Nút bấm hoạt hình */
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--text-color);
+            background: var(--accent-color);
+            border: 4px solid var(--text-color);
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0px 5px 0px var(--text-color);
+            transition: all 0.1s ease;
+            margin: 10px;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0px 7px 0px var(--text-color);
+        }
+
+        .btn:active {
+            transform: translateY(5px);
+            box-shadow: 0px 0px 0px var(--text-color);
+        }
+
+        .btn-primary { background: var(--primary-color); color: white; }
+        .btn-package { background: #D4A5A5; color: white; width: 80%; }
+        .btn-record { background: #FFAAA5; color: white; border-radius: 50%; width: 90px; height: 90px; padding: 0; line-height: 80px; font-size: 2rem;}
+        .btn-confirm { background: #A8E6CF; }
+
+        /* Khối hiển thị Tiếng Trung */
+        .chinese-display {
+            background: #FFF;
+            border: 4px solid var(--text-color);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        }
+
+        .hz {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .py {
+            font-size: 1.3rem;
+            color: #7f8c8d;
+            font-weight: bold;
+        }
+
+        .mean {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        /* Tiến trình câu hỏi */
+        .progress-bar {
+            width: 100%;
+            background-color: #ddd;
+            border: 3px solid var(--text-color);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 20px;
+            background-color: var(--accent-color);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Vùng thu âm và trạng thái */
+        .audio-section {
+            margin: 20px 0;
+        }
+
+        .status-text {
+            font-weight: bold;
+            margin-top: 10px;
+            min-height: 24px;
+        }
+
+        .recording {
+            animation: pulse 1s infinite;
+            background-color: #ff4757 !important;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Khung kết quả chấm điểm câu */
+        .result-box {
+            background: #F0FFF0;
+            border: 3px dashed #2ed573;
+            border-radius: 15px;
+            padding: 15px;
+            margin: 15px 0;
+            display: none;
+        }
+
+        .score-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2ed573;
+        }
+
+        .comment-text {
+            font-size: 1rem;
+            color: #57606f;
+            margin-top: 5px;
+        }
+
+        /* Màn hình tổng kết */
+        .final-score {
+            font-size: 4rem;
+            font-family: 'Mochi突', sans-serif;
+            color: var(--primary-color);
+            text-shadow: 3px 3px 0px var(--text-color);
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Bong bóng trang trí nền -->
+        <div class="decor-bubble" style="width: 60px; height: 60px; top: -20px; left: -20px;"></div>
+        <div class="decor-bubble" style="width: 80px; height: 80px; bottom: -30px; right: -30px; background: var(--accent-color);"></div>
+
+        <!-- MÀN HÌNH 1: CHÀO MỪNG -->
+        <div id="screen-welcome" class="screen active">
+            <h1>你好!</h1>
+            <p>Chào mừng bạn đến với vương quốc học Tiếng Trung siêu cấp đáng yêu! Hãy sẵn sàng để luyện giọng nhé! 🐼✨</p>
+            <button class="btn btn-primary" onclick="goToScreen('screen-package')">Bắt đầu ngay thôi! 🚀</button>
+        </div>
+
+        <!-- MÀN HÌNH 2: CHỌN GÓI CÂU HỎI -->
+        <div id="screen-package" class="screen">
+            <h1>Chọn Gói Học</h1>
+            <p>Hôm nay bạn muốn thử thách bản thân với phần nào nè?</p>
+            <button class="btn btn-package" onclick="startLesson('tu-vung')">Từ Vựng Cơ Bản 🍎</button>
+            <button class="btn btn-package" onclick="startLesson('cau')">Câu Giao Tiếp 💬</button>
+            <br>
+            <button class="btn" style="font-size: 0.9rem; padding: 8px 15px;" onclick="goToScreen('screen-welcome')">Quay lại</button>
+        </div>
+
+        <!-- MÀN HÌNH 3: HỌC & THU ÂM -->
+        <div id="screen-learning" class="screen">
+            <div class="progress-bar">
+                <div id="progress" class="progress"></div>
+            </div>
+            <div style="text-align: right; font-size: 0.9rem; font-weight: bold; margin-bottom: 5px;" id="question-number">1/10</div>
+
+            <!-- Hiển thị tiếng Trung ở trên -->
+            <div class="chinese-display">
+                <span class="hz" id="display-hz">你好</span>
+                <span class="py" id="display-py">nǐ hǎo</span>
+                <p class="mean" id="display-mean">Xin chào</p>
+            </div>
+
+            <!-- Khu vực thu âm ở dưới -->
+            <div class="audio-section">
+                <p style="font-size: 0.9rem; margin-bottom: 10px;">Nhấn nút bên dưới và đọc to lên nhé:</p>
+                <button id="btn-record" class="btn btn-record" onclick="toggleRecording()">🎙️</button>
+                <div id="status-text" class="status-text">Sẵn sàng...</div>
+            </div>
+
+            <!-- Nút xác nhận sau khi ghi âm -->
+            <button id="btn-confirm" class="btn btn-confirm" style="display: none;" onclick="confirmAnswer()">Xác nhận & Chấm điểm ✔️</button>
+
+            <!-- Khung hiển thị nhận xét từng câu -->
+            <div id="result-box" class="result-box">
+                <div class="score-text" id="result-score">95 điểm!</div>
+                <div class="comment-text" id="result-comment">Phát âm rất chuẩn, giống người bản xứ lắm nha! 😍</div>
+                <button class="btn btn-primary" style="margin-top: 15px; font-size: 1rem;" onclick="nextQuestion()">Tiếp theo ➡️</button>
+            </div>
+        </div>
+
+        <!-- MÀN HÌNH 4: TỔNG KẾT BÌNH QUÂN -->
+        <div id="screen-result" class="screen">
+            <h1>Hoàn Thành! 🎉</h1>
+            <p>Bạn đã xuất sắc vượt qua 10 câu hỏi. Điểm số trung bình của bạn là:</p>
+            <div class="final-score" id="final-avg-score">88</div>
+            <p id="final-evaluation" style="font-weight: bold; color: var(--primary-color);">Quá đỉnh luôn! Hãy tiếp tục phát huy nhé! ❤️</p>
+            <button class="btn btn-primary" onclick="goToScreen('screen-package')">Học tiếp gói khác 🔄</button>
+        </div>
+    </div>
+
+    <script>
+        // Dữ liệu câu hỏi tiếng Trung mẫu
+        const dataTuVung = [
+            { hz: "苹果", py: "píng guǒ", mean: "Quả táo" },
+            { hz: "猫", py: "māo", mean: "Con mèo" },
+            { hz: "水", py: "shuǐ", mean: "Nước" },
+            { hz: "谢谢", py: "xiè xie", mean: "Cảm ơn" },
+            { hz: "再见", py: "zài jiàn", mean: "Tạm biệt" },
+            { hz: "老师", py: "lǎo shī", mean: "Thầy/Cô giáo" },
+            { hz: "学生", py: "xué sheng", mean: "Học sinh" },
+            { hz: "面包", py: "miàn bāo", mean: "Bánh mì" },
+            { hz: "咖啡", py: "kā fēi", mean: "Cà phê" },
+            { hz: "手机", py: "shǒu jī", mean: "Điện thoại di động" },
+            { hz: "朋友", py: "péng you", mean: "Bạn bè" },
+            { hz: "高兴", py: "gāo xìng", mean: "Vui vẻ" }
+        ];
+
+        const dataCau = [
+            { hz: "你叫什么名字？", py: "Nǐ jiào shén me míng zi?", mean: "Bạn tên là gì?" },
+            { hz: "我爱你。", py: "Wǒ ài nǐ.", mean: "Tôi yêu bạn." },
+            { hz: "今天天气很好。", py: "Jīntiān tiānqì hěn hǎo.", mean: "Hôm nay thời tiết rất đẹp." },
+            { hz: "你想吃 family 吗？", py: "Nǐ xiǎng chī shénme?", mean: "Bạn muốn ăn gì?" },
+            { hz: "我在学汉语。", py: "Wǒ zài xué Hànyǔ.", mean: "Tôi đang học tiếng Trung." },
+            { hz: "认识你很高兴。", py: "Rènshi nǐ hěn gāo xìng.", mean: "Rất vui được quen biết bạn." },
+            { hz: "这个多少钱？", py: "Zhè ge duō shǎo qián?", mean: "Cái này bao nhiêu tiền?" },
+            { hz: "你可以帮 me 吗？", py: "Nǐ kě yǐ bāng wǒ ma?", mean: "Bạn có thể giúp tôi không?" },
+            { hz: "祝你生日快乐！", py: "Zhù nǐ shēng rì kuài lè!", mean: "Chúc bạn sinh nhật vui vẻ!" },
+            { hz: "我想去中国 tourism。", py: "Wǒ xiǎng qù Zhōngguó lǚyóu.", mean: "Tôi muốn đi du lịch Trung Quốc." }
+        ];
+
+        // Lời nhận xét ngẫu nhiên theo khung điểm
+        const comments = {
+            good: ["Tuyệt vời ông mặt trời! 🌟", "Phát âm đỉnh chóp luôn! 💖", "Quá chuẩn, giống hệt người bản xứ! 🥰"],
+            normal: ["Khá tốt rồi, cố gắng chút nữa nha! 👍", "Nghe cũng ổn áp đó, luyện thêm xíu nè! 😉", "Tạm được nè, cố lên bạn ơi! 💪"],
+            try: ["Hơi lệch tông một xíu, thử lại xem sao! 🥺", "Cố lên, vạn sự khởi đầu nan mà! 🔥", "Hãy nghe kỹ lại và đọc to rõ hơn nhé! 🎯"]
+        };
+
+        let currentPackage = [];
+        let currentQuestionIndex = 0;
+        let scores = [];
+        let isRecording = false;
+        let recordTimeout;
+
+        // Chuyển đổi giữa các màn hình
+        function goToScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        // Bắt đầu một gói học (Chọn ngẫu nhiên 10 câu)
+        function startLesson(type) {
+            let baseData = type === 'tu-vung' ? [...dataTuVung] : [...dataCau];
+            // Trộn ngẫu nhiên danh sách câu hỏi
+            currentPackage = baseData.sort(() => 0.5 - Math.random()).slice(0, 10);
+            
+            currentQuestionIndex = 0;
+            scores = [];
+            
+            goToScreen('screen-learning');
+            loadQuestion();
+        }
+
+        // Tải câu hỏi hiện tại lên giao diện
+        function loadQuestion() {
+            let q = currentPackage[currentQuestionIndex];
+            document.getElementById('display-hz').innerText = q.hz;
+            document.getElementById('display-py').innerText = q.py;
+            document.getElementById('display-mean').innerText = q.mean;
+
+            // Cập nhật thanh tiến trình
+            let progressPercent = (currentQuestionIndex / 10) * 100;
+            document.getElementById('progress').style.width = progressPercent + '%';
+            document.getElementById('question-number').innerText = (currentQuestionIndex + 1) + "/10";
+
+            // Reset trạng thái thu âm & nút bấm
+            isRecording = false;
+            document.getElementById('btn-record').classList.remove('recording');
+            document.getElementById('btn-record').style.display = 'inline-block';
+            document.getElementById('status-text').innerText = "Sẵn sàng...";
+            document.getElementById('status-text').style.color = "var(--text-color)";
+            document.getElementById('btn-confirm').style.display = 'none';
+            document.getElementById('result-box').style.display = 'none';
+        }
+
+        // Giả lập hành động bấm nút thu âm
+        function toggleRecording() {
+            let recordBtn = document.getElementById('btn-record');
+            let statusText = document.getElementById('status-text');
+
+            if (!isRecording) {
+                // Bắt đầu thu âm giả lập
+                isRecording = true;
+                recordBtn.classList.add('recording');
+                statusText.innerText = "🔴 Đang nghe bạn nói... Đọc đi nào!";
+                statusText.style.color = "#ff4757";
+
+                // Tự động dừng sau 3 giây giả lập như người dùng đọc xong
+                recordTimeout = setTimeout(() => {
+                    stopRecording();
+                }, 3000);
+            } else {
+                clearTimeout(recordTimeout);
+                stopRecording();
+            }
+        }
+
+        function stopRecording() {
+            isRecording = false;
+            document.getElementById('btn-record').classList.remove('recording');
+            document.getElementById('status-text').innerText = "🎵 Đã ghi âm xong!";
+            document.getElementById('status-text').style.color = "#2ed573";
+            document.getElementById('btn-confirm').style.display = 'inline-block';
+        }
+
+        // Bấm nút Xác nhận để chấm điểm câu đó
+        function confirmAnswer() {
+            // Giả lập điểm số ngẫu nhiên từ 50 đến 100
+            let randomScore = Math.floor(Math.random() * 51) + 50;
+            scores.push(randomScore);
+
+            let scoreTxt = document.getElementById('result-score');
+            let commentTxt = document.getElementById('result-comment');
+            let resultBox = document.getElementById('result-box');
+
+            scoreTxt.innerText = randomScore + " Điểm!";
+
+            // Phân loại nhận xét dựa trên điểm số
+            let commentPool;
+            if (randomScore >= 85) {
+                commentPool = comments.good;
+                scoreTxt.style.color = "#2ed573";
+                resultBox.style.borderColor = "#2ed573";
+                resultBox.style.backgroundColor = "#F0FFF0";
+            } else if (randomScore >= 70) {
+                commentPool = comments.normal;
+                scoreTxt.style.color = "#ffa500";
+                resultBox.style.borderColor = "#ffa500";
+                resultBox.style.backgroundColor = "#FFF8DC";
+            } else {
+                commentPool = comments.try;
+                scoreTxt.style.color = "#ff4757";
+                resultBox.style.borderColor = "#ff4757";
+                resultBox.style.backgroundColor = "#FFE4E1";
+            }
+
+            let randomComment = commentPool[Math.floor(Math.random() * commentPool.length)];
+            commentTxt.innerText = randomComment;
+
+            // Ẩn nút chức năng thu âm đi, hiện bảng kết quả
+            document.getElementById('btn-confirm').style.display = 'none';
+            document.getElementById('btn-record').style.display = 'none';
+            resultBox.style.display = 'block';
+        }
+
+        // Chuyển sang câu tiếp theo hoặc Tổng kết nếu hết 10 câu
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < 10) {
+                loadQuestion();
+            } else {
+                showFinalResult();
+            }
+        }
+
+        // Màn hình tổng kết điểm bình quân
+        function showFinalResult() {
+            goToScreen('screen-result');
+            
+            // Tính điểm trung bình cộng
+            let sum = scores.reduce((a, b) => a + b, 0);
+            let avg = Math.round(sum / scores.length);
+
+            document.getElementById('final-avg-score').innerText = avg;
+
+            // Đánh giá chung cuộc
+            let evaluation = document.getElementById('final-evaluation');
+            if (avg >= 85) {
+                evaluation.innerText = "Trời ơi siêu cấp vip pro! Tiếng Trung của bạn đỉnh thật sự! 🏆👑";
+                evaluation.style.color = "#2ed573";
+            } else if (avg >= 70) {
+                evaluation.innerText = "Làm tốt lắm nè! Chăm chỉ luyện tập thêm để thành cao thủ nha! 🐱✨";
+                evaluation.style.color = "#ffa500";
+            } else {
+                evaluation.innerText = "Đừng nản chí nha, cùng làm lại một gói khác để tiến bộ hơn nào! 💪🌸";
+                evaluation.style.color = "#ff4757";
+            }
+        }
+    </script>
+</body>
+</html>
