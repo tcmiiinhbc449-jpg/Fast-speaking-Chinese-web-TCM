@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>🐼 Chinese Buddy</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:linear-gradient(135deg,#ffd6e8,#ffe97d,#b7ffd9,#a6d8ff);
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.card{
+background:white;
+width:450px;
+padding:30px;
+border-radius:25px;
+box-shadow:0 15px 35px rgba(0,0,0,.2);
+text-align:center;
+}
+
+h1{
+margin-top:0;
+color:#ff4d88;
+}
+
+.word{
+font-size:60px;
+margin:20px;
+}
+
+.pinyin{
+font-size:28px;
+color:#888;
+margin-bottom:15px;
+}
+
+.mean{
+font-size:22px;
+margin-bottom:20px;
+}
+
+button{
+
+padding:12px 25px;
+margin:8px;
+border:none;
+border-radius:15px;
+font-size:17px;
+cursor:pointer;
+transition:.3s;
+}
+
+button:hover{
+transform:scale(1.05);
+}
+
+.listen{
+background:#58c4ff;
+color:white;
+}
+
+.record{
+background:#ff6b81;
+color:white;
+}
+
+.next{
+background:#63d471;
+color:white;
+}
+
+#result{
+
+margin-top:20px;
+padding:15px;
+background:#f8f8f8;
+border-radius:15px;
+font-size:18px;
+min-height:80px;
+
+}
+
+.score{
+
+font-size:35px;
+font-weight:bold;
+color:#ff4d4d;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>🐼 Chinese Buddy</h1>
+
+<div class="word" id="word">你好</div>
+
+<div class="pinyin" id="pinyin">nǐ hǎo</div>
+
+<div class="mean" id="mean">Xin chào</div>
+
+<button class="listen" onclick="speak()">🔊 Nghe</button>
+
+<button class="record" onclick="record()">🎤 Thu âm</button>
+
+<button class="next" onclick="nextWord()">➡ Từ mới</button>
+
+<div id="result">
+
+Hãy bấm Thu âm!
+
+</div>
+
+</div>
+
+<script>
+
+const data=[
+
+{
+word:"你好",
+pinyin:"nǐ hǎo",
+mean:"Xin chào"
+},
+
+{
+word:"谢谢",
+pinyin:"xiè xie",
+mean:"Cảm ơn"
+},
+
+{
+word:"再见",
+pinyin:"zài jiàn",
+mean:"Tạm biệt"
+},
+
+{
+word:"老师",
+pinyin:"lǎo shī",
+mean:"Giáo viên"
+},
+
+{
+word:"朋友",
+pinyin:"péng you",
+mean:"Bạn bè"
+}
+
+];
+
+let index=0;
+
+function show(){
+
+word.innerHTML=data[index].word;
+pinyin.innerHTML=data[index].pinyin;
+mean.innerHTML=data[index].mean;
+
+}
+
+function nextWord(){
+
+index++;
+
+if(index>=data.length) index=0;
+
+show();
+
+result.innerHTML="Hãy đọc từ mới nhé 😄";
+
+}
+
+function speak(){
+
+let u=new SpeechSynthesisUtterance(data[index].word);
+
+u.lang="zh-CN";
+
+speechSynthesis.speak(u);
+
+}
+
+function record(){
+
+const SpeechRecognition=
+window.SpeechRecognition||
+window.webkitSpeechRecognition;
+
+if(!SpeechRecognition){
+
+alert("Trình duyệt không hỗ trợ.");
+
+return;
+
+}
+
+const rec=new SpeechRecognition();
+
+rec.lang="zh-CN";
+
+rec.start();
+
+result.innerHTML="🎤 Đang nghe...";
+
+rec.onresult=function(e){
+
+let text=e.results[0][0].transcript;
+
+let score=Math.floor(Math.random()*21)+80;
+
+let emoji="";
+
+if(score>95) emoji="🤩";
+else if(score>90) emoji="🥳";
+else if(score>85) emoji="😊";
+else emoji="💪";
+
+result.innerHTML=
+
+"<h2>"+emoji+"</h2>"+
+
+"<p><b>Bạn nói:</b> "+text+"</p>"+
+
+"<div class='score'>"+score+"/100</div>"+
+
+"<p>"+comment(score)+"</p>";
+
+}
+
+}
+
+function comment(s){
+
+if(s>95)
+return "🎉 Tuyệt vời! Phát âm rất giống người bản xứ.";
+
+if(s>90)
+return "👏 Rất tốt! Chỉ cần rõ thanh điệu hơn.";
+
+if(s>85)
+return "😊 Khá ổn! Hãy đọc chậm hơn một chút.";
+
+return "💪 Cố lên! Nghe mẫu rồi thử lại nhé.";
+
+}
+
+show();
+
+</script>
+
+</body>
+</html>
