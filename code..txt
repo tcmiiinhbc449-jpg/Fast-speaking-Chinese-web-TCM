@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Chinese Buddy</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Comic Sans MS;
+background:linear-gradient(135deg,#ffb6e6,#ffe86e,#9fffd4,#8bd7ff);
+overflow:hidden;
+}
+
+.page{
+display:none;
+height:100vh;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+}
+
+.active{
+display:flex;
+}
+
+.card{
+background:white;
+padding:30px;
+border-radius:30px;
+box-shadow:0 10px 30px rgba(0,0,0,.2);
+text-align:center;
+width:80%;
+max-width:700px;
+}
+
+button{
+padding:15px 35px;
+border:none;
+border-radius:40px;
+font-size:20px;
+margin:10px;
+cursor:pointer;
+background:#ff69b4;
+color:white;
+transition:.3s;
+}
+
+button:hover{
+transform:scale(1.1);
+}
+
+#word{
+font-size:55px;
+margin:20px;
+color:#ff4c7d;
+}
+
+#feedback{
+font-size:22px;
+margin-top:20px;
+}
+
+#progress{
+font-size:22px;
+margin-bottom:15px;
+}
+
+.star{
+position:absolute;
+font-size:30px;
+animation:float 5s infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(0)}
+50%{transform:translateY(-20px)}
+100%{transform:translateY(0)}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="star" style="left:5%;top:10%">⭐</div>
+<div class="star" style="left:90%;top:20%">🌸</div>
+<div class="star" style="left:15%;top:80%">🐼</div>
+<div class="star" style="left:80%;top:75%">🌈</div>
+<div class="star" style="left:45%;top:5%">☁️</div>
+
+<div class="page active" id="welcome">
+
+<div class="card">
+
+<h1>🐼 Chinese Buddy</h1>
+
+<h2>Chào mừng bạn!</h2>
+
+<p>Học tiếng Trung thật vui 🎉</p>
+
+<button onclick="showPackage()">Bắt đầu</button>
+
+</div>
+
+</div>
+
+<div class="page" id="package">
+
+<div class="card">
+
+<h2>Chọn gói</h2>
+
+<button onclick="start('word')">📖 Từ vựng</button>
+
+<button onclick="start('sentence')">💬 Câu</button>
+
+</div>
+
+</div>
+
+<div class="page" id="learn">
+
+<div class="card">
+
+<div id="progress"></div>
+
+<div id="word"></div>
+
+<button onclick="record()">🎤 Ghi âm</button>
+
+<button onclick="submit()">✅ Xác nhận</button>
+
+<div id="feedback"></div>
+
+</div>
+
+</div>
+
+<div class="page" id="finish">
+
+<div class="card">
+
+<h1>🎉 Hoàn thành</h1>
+
+<h2 id="avg"></h2>
+
+<button onclick="location.reload()">Học lại</button>
+
+</div>
+
+</div>
+
+<script>
+
+const words=[
+"你好",
+"谢谢",
+"再见",
+"老师",
+"学生",
+"中国",
+"喜欢",
+"今天",
+"朋友",
+"学习",
+"我想喝水",
+"你吃饭了吗",
+"今天天气很好",
+"我喜欢中国菜",
+"欢迎来到中国",
+"请慢一点说",
+"你叫什么名字",
+"我不会说中文",
+"我们一起学习",
+"祝你好运"
+];
+
+let questions=[];
+let current=0;
+let scores=[];
+
+function showPackage(){
+
+welcome.classList.remove("active");
+package.classList.add("active");
+
+}
+
+function shuffle(arr){
+
+return [...arr].sort(()=>Math.random()-0.5);
+
+}
+
+function start(type){
+
+questions=shuffle(words).slice(0,10);
+
+package.classList.remove("active");
+
+learn.classList.add("active");
+
+showQuestion();
+
+}
+
+function showQuestion(){
+
+progress.innerHTML=`Câu ${current+1}/10`;
+
+word.innerHTML=questions[current];
+
+feedback.innerHTML="";
+
+}
+
+function record(){
+
+alert("🎤 Đang ghi âm (Demo)");
+
+}
+
+function submit(){
+
+let score=Math.floor(Math.random()*21)+80;
+
+scores.push(score);
+
+let text="";
+
+if(score>=95){
+
+text="🌟 Hoàn hảo!";
+
+}
+
+else if(score>=90){
+
+text="😊 Rất tốt!";
+
+}
+
+else{
+
+text="👍 Khá tốt, cần luyện thêm thanh điệu.";
+
+}
+
+feedback.innerHTML=`<h2>${score}/100</h2>${text}`;
+
+setTimeout(()=>{
+
+current++;
+
+if(current==10){
+
+finish();
+
+}else{
+
+showQuestion();
+
+}
+
+},1500);
+
+}
+
+function finish(){
+
+learn.classList.remove("active");
+
+finish.classList.add("active");
+
+let avg=(scores.reduce((a,b)=>a+b)/scores.length).toFixed(1);
+
+document.getElementById("avg").innerHTML="Điểm trung bình: "+avg+"/100";
+
+}
+
+</script>
+
+</body>
+</html>
